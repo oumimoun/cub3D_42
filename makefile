@@ -1,58 +1,60 @@
 NAME = cub3D
 CC = cc
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+FLAGS = #-Wall -Wextra -Werror #-fsanitize=address -g
 AR = ar -r
 RM = rm -f
-HEAD = cub3D.h
-MK = make
-LIBFT = ./libft/libft.a
-HEADLIBFT = ./libft/libft.h
+HEAD = cub3d.h
+LIBFT = ./Libft/libft.a
+HEADLIBFT = ./Libft/libft.h
 HEADGNL = ./get_next_line/get_next_line.h
 BUILD = MLX42/build
-MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib" -lmlx42
+MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib"
 
 
 SRC = main.c\
-		get_next_line/get_next_line.c\
+		./get_next_line/get_next_line.c\
+		./parsing/start_parsing.c\
+		./parsing/parsing_map.c\
+		./parsing/save_vars.c\
 
 
-LIBFTSRC = ./libft/ft_atoi.c\
-		./libft/ft_bzero.c\
-		./libft/ft_calloc.c\
-		./libft/ft_isalnum.c\
-		./libft/ft_isalpha.c\
-		./libft/ft_isprint.c\
-		./libft/ft_isdigit.c\
-		./libft/ft_isascii.c\
-		./libft/ft_itoa.c\
-		./libft/ft_memchr.c\
-		./libft/ft_memcpy.c\
-		./libft/ft_memset.c\
-		./libft/ft_memcmp.c\
-		./libft/ft_memmove.c\
-		./libft/ft_split.c\
-		./libft/ft_strlcat.c\
-		./libft/ft_strlen.c\
-		./libft/ft_strnstr.c\
-		./libft/ft_strrchr.c\
-		./libft/ft_strchr.c\
-		./libft/ft_strlcpy.c\
-		./libft/ft_strlcat.c\
-		./libft/ft_strdup.c\
-		./libft/ft_strncmp.c\
-		./libft/ft_strlcat.c\
-		./libft/ft_strtrim.c\
-		./libft/ft_substr.c\
-		./libft/ft_tolower.c\
-		./libft/ft_toupper.c\
-		./libft/ft_strmapi.c\
-		./libft/ft_striteri.c\
-		./libft/ft_strjoin.c\
-		./libft/ft_putchar_fd.c\
-		./libft/ft_putstr_fd.c\
-		./libft/ft_putendl_fd.c\
-		./libft/ft_putnbr_fd.c\
-		./libft/libft.h
+LIBFTSRC = ./Libft/ft_atoi.c\
+		./Libft/ft_bzero.c\
+		./Libft/ft_calloc.c\
+		./Libft/ft_isalnum.c\
+		./Libft/ft_isalpha.c\
+		./Libft/ft_isprint.c\
+		./Libft/ft_isdigit.c\
+		./Libft/ft_isascii.c\
+		./Libft/ft_itoa.c\
+		./Libft/ft_memchr.c\
+		./Libft/ft_memcpy.c\
+		./Libft/ft_memset.c\
+		./Libft/ft_memcmp.c\
+		./Libft/ft_memmove.c\
+		./Libft/ft_split.c\
+		./Libft/ft_strlcat.c\
+		./Libft/ft_strlen.c\
+		./Libft/ft_strnstr.c\
+		./Libft/ft_strrchr.c\
+		./Libft/ft_strchr.c\
+		./Libft/ft_strlcpy.c\
+		./Libft/ft_strlcat.c\
+		./Libft/ft_strdup.c\
+		./Libft/ft_strncmp.c\
+		./Libft/ft_strlcat.c\
+		./Libft/ft_strtrim.c\
+		./Libft/ft_substr.c\
+		./Libft/ft_tolower.c\
+		./Libft/ft_toupper.c\
+		./Libft/ft_strmapi.c\
+		./Libft/ft_striteri.c\
+		./Libft/ft_strjoin.c\
+		./Libft/ft_putchar_fd.c\
+		./Libft/ft_putstr_fd.c\
+		./Libft/ft_putendl_fd.c\
+		./Libft/ft_putnbr_fd.c\
+		./Libft/libft.h
 
 
 
@@ -66,12 +68,12 @@ $(BUILD):
 	fi
 
 $(LIBFT): $(LIBFTSRC)
-	$(MK) -C ./Libft
+	make -C ./Libft
 
 
 
 $(NAME): $(BUILD) $(LIBFT)  $(OBJ)
-	$(MK) -C MLX42/build
+	make -C MLX42/build
 	$(CC) $(OBJ) $(LIBFT)   $(MLX) -o $(NAME)
 
 
@@ -81,7 +83,7 @@ $(NAME): $(BUILD) $(LIBFT)  $(OBJ)
 clean:
 	$(RM) $(OBJ)
 	$(RM) main.o
-	$(MK) clean -C ./Libft
+	make clean -C ./Libft
 
 fclean: clean
 	$(RM) $(NAME)

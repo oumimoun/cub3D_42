@@ -1,40 +1,39 @@
 #include "cub3d.h"
 
+
+
 int	main(int ac, char **av)
 {
+	mlx_t*    mlx;
+	mlx_image_t *image;
+	t_data *data;
+	t_map *map_info;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (ft_putstr_fd("Error\nmalloc\n", 2), ERROR);
+	map_info = malloc(sizeof(t_map));
+	if (!map_info)
+		return (ft_putstr_fd("Error\nmalloc\n", 2), ERROR);
+	data->map_info = map_info;
 	if (ac != 2)
-		return (ft_putstr_fd("Eroor\nWrong number of arguments\n", 2), 1);
-	ft_pasing(av[1]);
-	
+		return (ft_putstr_fd("Eroor\nWrong number of arguments\n", 2), ERROR);
+	if (ft_parsing(av[1], data) == ERROR)
+		return (ERROR);
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+		return (ft_putstr_fd("Eroor\nmlx_init\n", 2), ERROR);
+	if (!(image = mlx_new_image(mlx, WIDTH, HEIGHT)))
+	{
+		mlx_close_window(mlx);
+		return (ft_putstr_fd("Eroor\nmlx_new_image\n", 2), ERROR);
+	}
+	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
+	{
+		mlx_close_window(mlx);
+		return (ft_putstr_fd("Eroor\nmlx_image_to_window\n", 2), ERROR);
+	}
 
-	// mlx_image_t	*img;
-	// mlx_t*    mlx;
-	// t_addr *addr;
-	// t_player player;
-
-	// addr = NULL;
-
-	// char **map;
-
-	// map = parse_map(addr, "./maps/example.map");
-	// player.x = WIDTH/2;
-	// player.y = HEIGHT/2;
-	// player.turn_direction = 0;
-	// player.walk_direction = 0;
-	// player.rotation_angle = M_PI / 2;
-	// player.move_speed = 3.0;
-	// player.rot_speed = 2 * M_PI / 180;
-
-	// TODO protect MLX utils if each one fails
-	// mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
-	// if (!mlx)
-	// 	exit(EXIT_FAILURE);
-	// img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	// mlx_image_to_window(mlx, img, 0, 0);
-	// draw_map(map, img);
-	// mlx_loop_hook(mlx, &hook, mlx);
-	// mlx_loop(mlx);
-	// mlx_terminate(mlx);
-	// ft_lstclear(&addr, free);
-	return (EXIT_SUCCESS);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (SUCCESS);
 }
