@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:09:28 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/22 15:10:34 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:38:03 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int ft_save_vars(char *map_path, t_data *data)
 
 
     }
+    close(fd);
     return SUCCESS;
 }

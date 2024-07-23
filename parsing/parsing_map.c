@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:49:11 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/22 14:08:39 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/23 08:58:15 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ int ft_parsing_map(char *map_path, t_data *data)
     int fd;
     char *line;
 
+    (void)data;
     fd = open(map_path, O_RDONLY);
     if (fd < 0)
         return ERROR;
     line = get_next_line(fd);
+    printf("[%d] line: |%s|\n", fd, line);
     while (line)
     {
         int  i = 0;
@@ -69,6 +71,8 @@ int ft_parsing_map(char *map_path, t_data *data)
         int i = 0;
         while (line[i] == ' ' || line[i] == '\t')
             i++;
+        // printf("line: |%s|\n", line);
+        // printf("index: |%d|\n", i);
         // printf("char: |%c|\n", line[i]);
         if (line[i] == '\n')
             return ERROR;
@@ -77,6 +81,5 @@ int ft_parsing_map(char *map_path, t_data *data)
         line = get_next_line(fd);
     }
     close(fd);
-    
     return SUCCESS;
 }

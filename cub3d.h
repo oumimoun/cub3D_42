@@ -80,7 +80,7 @@ int	ft_strcmp(const char *s1, const char *s2);
 int ft_parsing_map(char *map_path, t_data *data);
 int ft_save_vars(char *map_path, t_data *data);
 int ft_valide_wall_direction(char *line);
-
+int ft_check_vars(t_data *data);
 
 
 #endif

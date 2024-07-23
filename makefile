@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-FLAGS = #-Wall -Wextra -Werror #-fsanitize=address -g
+FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 AR = ar -r
 RM = rm -f
 HEAD = cub3d.h
@@ -16,6 +16,7 @@ SRC = main.c\
 		./parsing/start_parsing.c\
 		./parsing/parsing_map.c\
 		./parsing/save_vars.c\
+		./parsing/check_vars.c\
 
 
 LIBFTSRC = ./Libft/ft_atoi.c\
