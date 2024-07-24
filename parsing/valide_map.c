@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:25:51 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 19:31:01 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:33:02 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ int ft_check_zero_surroundings(char **map, int i, int j)
         printf("2\n");
         return ERROR;
     }
-    // if (i > 0 && map[i - 1][j] == ' ')
-    // {
-    //     printf("i - 1 ========|%d|\n", i - 1);
-    //     printf("j ========|%d|\n", j);
-    //     printf("===============|%c|\n", map[i - 1][j]);
-    //     return ERROR;
-    // }
+    if (map[i - 1][j] == ' ')
+    {
+        printf("i========|%d|\n", i - 1);
+        printf("j ========|%d|\n", j);
+        printf("===============|%c|\n", map[i - 1][j]);
+        return ERROR;
+    }
     if (map[i + 1] && map[i + 1][j] == ' ')
     {
         printf("4\n");
