@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:25:51 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 18:08:42 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:31:01 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,40 +67,64 @@ int ft_start_with_one(t_data *data)
     return SUCCESS;
 }
 
+int ft_check_zero_surroundings(char **map, int i, int j)
+{
+    if (map[i][j + 1] == ' ' || map[i][j + 1] == '\0')
+    {
+        printf("1\n");
+        return ERROR;
+    }
+    if (j > 0 && map[i][j - 1] == ' ')
+    {
+        printf("2\n");
+        return ERROR;
+    }
+    // if (i > 0 && map[i - 1][j] == ' ')
+    // {
+    //     printf("i - 1 ========|%d|\n", i - 1);
+    //     printf("j ========|%d|\n", j);
+    //     printf("===============|%c|\n", map[i - 1][j]);
+    //     return ERROR;
+    // }
+    if (map[i + 1] && map[i + 1][j] == ' ')
+    {
+        printf("4\n");
+        return ERROR;
+    }
+    return SUCCESS;
+}
+
 int ft_valide_map(t_data *data)
 {
-    char **temp;
-    temp = data->map_info->map;
-    int i;
-    int j;
+    char **temp = data->map_info->map;
+    int i, j;
 
-    i = 0;
 
-    printf("-%s-\n", temp[0]);
-    printf("-%s-\n", temp[data->map_info->map_height - 1]);
     if (ft_only_ones(temp[0]) == ERROR)
         return ERROR;
     if (ft_only_ones(temp[data->map_info->map_height - 1]) == ERROR)
         return ERROR;
 
+
     if (ft_start_with_one(data) == ERROR)
         return ERROR;
 
-
-    while (temp[i])
+    i = 1;
+    while (i < data->map_info->map_height - 1)
     {
         j = 0;
         while (temp[i][j])
         {
             if (temp[i][j] == '0')
             {
-                if (temp[i][j + 1] == ' ' || temp[i][j + 1] == '\0')
+                if (ft_check_zero_surroundings(temp, i, j) == ERROR)
                 {
-                    
+                    printf("===============|%c|\n", temp[i][j]);
+                    printf("la asa7bi\n");
+                    return ERROR;
                 }
-                
             }
-            
+            j++;
         }
         i++;
     }
