@@ -1,0 +1,7 @@
+[x] segfault when no vars
+1. first line is 1
+2. last line is 1
+3 . check zeros
+
+[ ] map_width;
+[ ] map_height;

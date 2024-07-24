@@ -19,6 +19,7 @@ SRC = main.c\
 		./parsing/check_vars.c\
 		./parsing/save_player_pos.c\
 		./parsing/split_map.c\
+		./parsing/valide_map.c\
 
 
 LIBFTSRC = ./Libft/ft_atoi.c\

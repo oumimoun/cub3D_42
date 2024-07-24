@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:39:49 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/23 11:24:07 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:30:35 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int ft_parse_color(char *str)
     char **split;
     int i;
 
+    if (!str)
+        return ERROR;
     if (ft_valide_rgb(str) == SUCCESS && ft_count_comma(str) == SUCCESS)
     {
         split = ft_split(str, ',');

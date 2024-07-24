@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 20:21:20 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 13:02:10 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:29:56 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,28 @@ int ft_parsing(char *map_path, t_data *data)
         return (ERROR);
     if (ft_parsing_vars(map_path, data) == ERROR)
         return (ERROR);
-    printf("here\n");
     if (ft_parsing_map(map_path, data) == ERROR)
         return ERROR;
     if (ft_save_vars(map_path, data) == ERROR)
         return ERROR;
     if (ft_check_vars(data) == ERROR)
         return ERROR;
+    printf("here\n");
     if (ft_split_map(data) == ERROR)
         return ERROR;
     if (ft_has_tabs(data) == ERROR)
         return ERROR;
+    if (ft_check_players(data) == ERROR)
+        return ERROR;
     if (ft_save_player_pos(data) == ERROR)
         return ERROR;
 
+    if (ft_fill_map_dimension(data) == ERROR)
+        return ERROR;
+    
+    if (ft_valide_map(data) == ERROR)
+        return ERROR;
+    
     
 
 

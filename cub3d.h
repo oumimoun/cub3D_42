@@ -89,4 +89,12 @@ char *ft_bring_map(int fd);
 int ft_has_tabs(t_data *data);
 int ft_split_map(t_data *data);
 
+int ft_check_players(t_data *data);
+int ft_fill_map_dimension(t_data *data);
+
+
+int ft_valide_map(t_data *data);
+
+
+
 #endif
