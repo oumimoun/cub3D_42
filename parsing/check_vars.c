@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:39:49 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/23 09:05:30 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:24:07 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ int ft_parse_color(char *str)
             i++;
         }
     }
+    else
+        return ERROR;
     return SUCCESS;    
 }
 
 int ft_check_vars(t_data *data)
 {
-
     if (ft_parse_color(data->map_info->f_color) == ERROR)
         return ERROR;
     if (ft_parse_color(data->map_info->c_color) == ERROR)

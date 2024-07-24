@@ -40,6 +40,7 @@ typedef struct s_map
     char    *f_color;
     char    *c_color;
     char    player_direction;
+    char *single_line_map;
 
 }    t_map;
 
@@ -75,12 +76,17 @@ typedef struct s_data
 }   t_data;
 
 
+
 int ft_parsing(char *map_path, t_data *data);
 int	ft_strcmp(const char *s1, const char *s2);
 int ft_parsing_map(char *map_path, t_data *data);
 int ft_save_vars(char *map_path, t_data *data);
 int ft_valide_wall_direction(char *line);
 int ft_check_vars(t_data *data);
+int ft_save_player_pos(t_data *data);
+char *ft_bring_map(int fd);
 
+int ft_has_tabs(t_data *data);
+int ft_split_map(t_data *data);
 
 #endif

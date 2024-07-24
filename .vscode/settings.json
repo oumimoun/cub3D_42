@@ -6,5 +6,5 @@
         "cub3d.h": "c",
         "libft.h": "c"
     },
-    "cmake.sourceDirectory": "/Users/oumimoun/Desktop/cub3D_42/MLX42"
+    // "cmake.sourceDirectory": "/Users/oumimoun/Desktop/cub3D_42/MLX42"
 }
