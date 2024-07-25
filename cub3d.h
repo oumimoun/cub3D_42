@@ -17,6 +17,7 @@
 #define WIDTH 1024
 #define HEIGHT 600
 #define SIZE 64
+#define TILE_SIZE 20
 
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -41,6 +42,7 @@ typedef struct s_map
     char    *c_color;
     char    player_direction;
     char *single_line_map;
+    char *single_line_vars;
 
 }    t_map;
 
@@ -95,6 +97,6 @@ int ft_fill_map_dimension(t_data *data);
 
 int ft_valide_map(t_data *data);
 
-
+int ft_double_check_vars(t_data *data);
 
 #endif

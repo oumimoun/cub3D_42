@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 20:21:20 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/25 13:25:53 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:16:39 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ int ft_parsing_vars(char *map_path, t_data *data)
 {
     int fd;
     char *line;
+    char *single_line_vars;
 
+    single_line_vars = ft_strdup("");
     fd = open(map_path, O_RDONLY);
     if (fd < 0)
         return (ERROR);
@@ -85,8 +87,11 @@ int ft_parsing_vars(char *map_path, t_data *data)
             break;
         if (ft_valide_wall_direction(&line[i]) == ERROR)
             return ft_putstr_fd("Error\nwrong map parameters\n", 2), ERROR;
+        single_line_vars = ft_strjoin(single_line_vars, line);
         line = get_next_line(fd);
     }
+    data->map_info->single_line_vars = single_line_vars;
+    printf("single_line_vars:|%s|\n", single_line_vars);
     close(fd);
     return SUCCESS;
 }
@@ -97,6 +102,10 @@ int ft_parsing(char *map_path, t_data *data)
         return (ERROR);
     if (ft_parsing_vars(map_path, data) == ERROR)
         return (ERROR);
+    if (ft_double_check_vars(data) == ERROR)
+        return ERROR;
+    
+    
     if (ft_parsing_map(map_path, data) == ERROR)
         return ERROR;
     if (ft_save_vars(map_path, data) == ERROR)
