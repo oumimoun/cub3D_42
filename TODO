@@ -3,5 +3,13 @@
 2. last line is 1
 3 . check zeros
 
-[ ] map_width;
-[ ] map_height;
+[x] map_width;
+[x] map_height;
+
+[ ] double var from the map
+
+F 225,255,
+F 225,255,4294967296 
+
+[ ] segfault if you remove any var 
+

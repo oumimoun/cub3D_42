@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:09:28 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/22 15:38:03 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:26:55 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,8 @@ int ft_save_vars(char *map_path, t_data *data)
                 data->map_info->c_color =  ft_substr(line, i, ft_strlen(&line[i]) - 1);
                 printf("|%s|\n", data->map_info->c_color);
             }
-    
         }
         line = get_next_line(fd);
-
-
     }
     close(fd);
     return SUCCESS;

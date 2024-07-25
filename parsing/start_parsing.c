@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 20:21:20 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 17:29:56 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:25:53 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int ft_parsing_vars(char *map_path, t_data *data)
 {
     int fd;
     char *line;
-    
-    (void)data;
+
     fd = open(map_path, O_RDONLY);
     if (fd < 0)
         return (ERROR);
@@ -104,7 +103,6 @@ int ft_parsing(char *map_path, t_data *data)
         return ERROR;
     if (ft_check_vars(data) == ERROR)
         return ERROR;
-    printf("here\n");
     if (ft_split_map(data) == ERROR)
         return ERROR;
     if (ft_has_tabs(data) == ERROR)
