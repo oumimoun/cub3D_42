@@ -4,7 +4,7 @@
 
 # define ERROR 1
 # define SUCCESS 0
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 #define PI 3.14159265
 #include "./MLX42/include/MLX42/MLX42.h"
 #include "./Libft/libft.h"
@@ -14,17 +14,19 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fcntl.h>
+#include <stdint.h> // For uint32_t
 
 
-#define WIDTH 1024
-#define HEIGHT 600
+#define WIDTH 1088
+#define HEIGHT 704
 #define SIZE 64
+#define BPP sizeof(int32_t)
 
-# define BLACK 0x000000
-# define WHITE 0xFFFFFF
-# define RED 0xFF0000
-# define BLUE 0x0000FF
-# define YELLOW 0xFFFF00
+#define BLACK  0x000000
+#define WHITE  0xFFFFFF
+#define RED    0xFF0000
+#define BLUE   0x0000FF
+#define YELLOW 0xFFFF00
 
 
 
@@ -70,12 +72,14 @@ typedef struct s_data
     struct s_map *map_info;
     // struct s_addr *addr;
     struct player *player;
+    char        *mlx_addr;
+    int bpp;
+    int line_length;
+    int endian;
     mlx_t   *mlx;
     mlx_image_t *image;
-  
 	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	
     void *window;
 }   t_data;
 
@@ -100,5 +104,16 @@ int ft_fill_map_dimension(t_data *data);
 int ft_valide_map(t_data *data);
 
 int ft_double_check_vars(t_data *data);
+int ft_init_vars(t_data *data);
+int ft_fill_map_with_sp(t_data *data);
+
+
+
+
+
+
+
+
+
 
 #endif

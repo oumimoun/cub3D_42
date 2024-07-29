@@ -21,6 +21,8 @@ SRC = main.c\
 		./parsing/split_map.c\
 		./parsing/valide_map.c\
 		./parsing/double_check_vars.c\
+		./parsing/fill_map_with_sp.c\
+		./src/init_vars.c\
 
 
 LIBFTSRC = ./Libft/ft_atoi.c\
