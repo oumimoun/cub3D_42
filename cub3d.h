@@ -4,6 +4,8 @@
 
 # define ERROR 1
 # define SUCCESS 0
+# define TILE_SIZE 64
+#define PI 3.14159265
 #include "./MLX42/include/MLX42/MLX42.h"
 #include "./Libft/libft.h"
 #include "./get_next_line/get_next_line.h"
@@ -17,7 +19,6 @@
 #define WIDTH 1024
 #define HEIGHT 600
 #define SIZE 64
-#define TILE_SIZE 20
 
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -69,12 +70,13 @@ typedef struct s_data
     struct s_map *map_info;
     // struct s_addr *addr;
     struct player *player;
-
-    void	*img;
+    mlx_t   *mlx;
+    mlx_image_t *image;
+  
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-    
+    void *window;
 }   t_data;
 
 

@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:39:49 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 16:30:35 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/29 09:26:50 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int ft_parse_color(char *str)
             free(split[i]);
             i++;
         }
+        if (i < 3)
+            return ERROR;
     }
     else
         return ERROR;

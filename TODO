@@ -6,10 +6,10 @@
 [x] map_width;
 [x] map_height;
 
-[ ] double var from the map
+[x] double var from the map
 
-F 225,255,
-F 225,255,4294967296 
+[x] F 225,255,
+[x] F 225,255,4294967296 
 
-[ ] segfault if you remove any var 
+[x] segfault if you remove any var 
 

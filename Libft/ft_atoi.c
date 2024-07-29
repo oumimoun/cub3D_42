@@ -6,20 +6,20 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 14:10:34 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/22 21:27:59 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/29 09:28:44 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <limits.h>
 
-static int	check_overflow(int sign)
-{
-	if (sign == 1)
-		return (-1);
-	else
-		return (0);
-}
+// static int	check_overflow(int sign)
+// {
+// 	if (sign == 1)
+// 		return (-1);
+// 	else
+// 		return (0);
+// }
 
 int	ft_atoi(char *str)
 {
@@ -40,10 +40,13 @@ int	ft_atoi(char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (total > (9223372036854775807ULL - (str[i] - '0')) / 10)
-			return (check_overflow(signe));
+		// if (total > (9223372036854775807ULL - (str[i] - '0')) / 10)
+		// 	return (check_overflow(signe));
 		total = total * 10 + str[i] - '0';
 		i++;
 	}
+	if (total > 255)
+		return -1;
+	
 	return ((int)(signe * total));
 }
