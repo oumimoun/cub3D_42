@@ -1,30 +1,3 @@
-#include "cub3d.h"
-
-
-// int	main(int ac, char **av)
-// {
-// 	t_data *data;
-// 	t_map *map_info;
-
-// 	data = malloc(sizeof(t_data));
-// 	if (!data)
-// 		return (ft_putstr_fd("Error\nmalloc\n", 2), ERROR);
-// 	map_info = malloc(sizeof(t_map));
-// 	if (!map_info)
-// 		return (ft_putstr_fd("Error\nmalloc\n", 2), ERROR);
-// 	data->map_info = map_info;
-// 	if (ac != 2)
-// 		return (ft_putstr_fd("Eroor\nWrong number of arguments\n", 2), ERROR);
-// 	if (ft_parsing(av[1], data) == ERROR)
-// 		return (ERROR);
-// 	////////////////////////////////////////////
-// 	if (ft_init_vars(data) == ERROR)
-// 		return ERROR;
-
-// 	return (SUCCESS);
-// }
-
-
 // before you start, you need to install the mlx library and you need to install the glfw library
 // you need to incude the mlx library in your file
 // for compiling the code you need to include the required frameworks and the libmlx.a amd link the glfw library
@@ -239,7 +212,7 @@ float	nor_angle(float angle)	// normalize the angle
 void	draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix)	// draw the floor and the ceiling
 {
 	int		i;
-
+	int		c;
 
 	i = b_pix;
 	while (i < S_H)

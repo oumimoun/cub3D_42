@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:56:26 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/29 12:05:12 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:45:02 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,18 @@
 // 	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
 // }
 
-void my_mlx_pixel_put(mlx_image_t *img, int x, int y, uint32_t color)
+void my_keyhook(mlx_key_data_t keydata, void* param)
+{
+	// If we PRESS the 'J' key, print "Hello".
+    t_data *data = (t_data *)param;
+    if (keydata.key == MLX_KEY_ESCAPE)
+    {
+        // Handle ESC key press, for example, close the application
+        mlx_close_window(data->mlx);
+    }
+}
+
+void my_mlx_pixel_put(mlx_image_t *img, int x, int y, int color)
 {
     if (x >= 0 && x < (int)img->width && y >= 0 && y < (int)img->height)
     {
@@ -32,7 +43,7 @@ void ft_2d_map(t_data *data)
 {
     int x, y;
     int i = 0, j;
-    uint32_t color = BLACK;
+    int color = BLACK;
     char **map = data->map_info->map;
 
     while (i < data->map_info->map_height)
@@ -90,8 +101,9 @@ int ft_init_vars(t_data *data)
     }
 
     // mlx_put_pixel(data->image, 0, 0, 0xFF0000FF);
-    fill_screen_black(data);
+    // fill_screen_black(data);
     ft_2d_map(data);
+    mlx_key_hook(data->mlx, &my_keyhook, data);
     // mlx_loop_hook(data->mlx, ft_hook, data->mlx);
     mlx_loop(data->mlx);
     mlx_terminate(data->mlx);
