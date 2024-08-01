@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:56:26 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/31 12:45:02 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:21:22 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,32 @@ void fill_screen_black(t_data *data)
     }
 }
 
+void ft_draw_player(t_data *data)
+{
+    int x, y;
+    int radius = 10;
+    int player_screen_x = data->map_info->player_x * TILE_SIZE + TILE_SIZE / 2;
+    int player_screen_y = data->map_info->player_y * TILE_SIZE + TILE_SIZE / 2;
+
+    x = 0;
+    while (x < WIDTH)
+    {
+        y = 0;
+        while (y < HEIGHT)
+        {
+            int dx = x - player_screen_x;
+            int dy = y - player_screen_y;
+            if (dx * dx + dy * dy < pow(radius, 2))
+            {
+                mlx_put_pixel(data->image, x, y, 0xFF0000FF);
+            }
+            y++;
+        }
+        x++;
+    }
+}
+
+
 int ft_init_vars(t_data *data)
 {
 
@@ -103,6 +129,7 @@ int ft_init_vars(t_data *data)
     // mlx_put_pixel(data->image, 0, 0, 0xFF0000FF);
     // fill_screen_black(data);
     ft_2d_map(data);
+    ft_draw_player(data);
     mlx_key_hook(data->mlx, &my_keyhook, data);
     // mlx_loop_hook(data->mlx, ft_hook, data->mlx);
     mlx_loop(data->mlx);

@@ -12,17 +12,17 @@ MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/
 
 
 SRC = main.c\
-		# ./get_next_line/get_next_line.c\
-		# ./parsing/start_parsing.c\
-		# ./parsing/parsing_map.c\
-		# ./parsing/save_vars.c\
-		# ./parsing/check_vars.c\
-		# ./parsing/save_player_pos.c\
-		# ./parsing/split_map.c\
-		# ./parsing/valide_map.c\
-		# ./parsing/double_check_vars.c\
-		# ./parsing/fill_map_with_sp.c\
-		# ./src/init_vars.c\
+		./get_next_line/get_next_line.c\
+		./parsing/start_parsing.c\
+		./parsing/parsing_map.c\
+		./parsing/save_vars.c\
+		./parsing/check_vars.c\
+		./parsing/save_player_pos.c\
+		./parsing/split_map.c\
+		./parsing/valide_map.c\
+		./parsing/double_check_vars.c\
+		./parsing/fill_map_with_sp.c\
+		./src/init_vars.c\
 
 
 LIBFTSRC = ./Libft/ft_atoi.c\
