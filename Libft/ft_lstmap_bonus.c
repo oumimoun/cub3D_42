@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:54:29 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/22 20:52:38 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/11/11 19:36:34 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/11/17 11:24:45 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	void	*cont;
-	t_list	*result;
+	t_list	*temp;
 	t_list	*new;
+	t_list	*head;
 
-	result = NULL;
 	if (!lst || !f || !del)
 		return (NULL);
+	head = NULL;
 	while (lst)
 	{
-		cont = f(lst->content);
-		new = ft_lstnew(cont);
+		temp = lst->next;
+		new = ft_lstnew(NULL);
 		if (!new)
 		{
-			del(cont);
-			ft_lstclear(&result, del);
+			ft_lstclear(&head, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&result, new);
-		lst = lst->next;
+		new->content = f(lst->content);
+		ft_lstadd_back(&head, new);
+		lst = temp;
 	}
-	return (result);
+	return (head);
 }

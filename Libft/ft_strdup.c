@@ -3,29 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/05 11:52:52 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/20 13:54:15 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/10/31 13:52:32 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/10/31 13:52:32 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *str)
+char	*ft_strdup(const char *s)
 {
-	int		i;
-	char	*p;
+	char	*copy;
 
-	i = 0;
-	p = (char *)malloc(ft_strlen(str) + 1 * sizeof(char));
-	if (p == NULL)
-		return (NULL);
-	while (str[i] != '\0')
+	if (!s[0])
 	{
-		p[i] = str[i];
-		i++;
+		copy = (char *)malloc(sizeof(char));
+		if (!copy)
+			return (NULL);
+		copy[0] = '\0';
+		return (copy);
 	}
-	p[i] = '\0';
-	return (p);
+	copy = (char *)malloc(ft_strlen(s) + 1 * sizeof(char));
+	if (!copy)
+		return (NULL);
+	ft_memcpy(copy, s, ft_strlen(s));
+	copy[ft_strlen(s)] = '\0';
+	return (copy);
 }

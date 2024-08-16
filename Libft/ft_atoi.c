@@ -3,50 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 14:10:34 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/29 09:28:44 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/10/31 13:51:28 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/11/20 10:36:30 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <limits.h>
 
-// static int	check_overflow(int sign)
-// {
-// 	if (sign == 1)
-// 		return (-1);
-// 	else
-// 		return (0);
-// }
-
-int	ft_atoi(char *str)
+static int	ft_check_flow(int sign)
 {
-	size_t				i;
-	int					signe;
-	unsigned long long	total;
+	if (sign == 1)
+		return (-1);
+	else
+		return (0);
+}
 
-	i = 0;
-	signe = 1;
-	total = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+int	ft_atoi(const char *str)
+{
+	unsigned long long	num;
+	int					sign;
+
+	num = 0;
+	sign = 1;
+	if (!*str)
+		return (0);
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		if (str[i] == '-')
-			signe *= (-1);
-		i++;
+		if (*str == '-')
+			sign = -1;
+		str++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (*str >= '0' && *str <= '9')
 	{
-		// if (total > (9223372036854775807ULL - (str[i] - '0')) / 10)
-		// 	return (check_overflow(signe));
-		total = total * 10 + str[i] - '0';
-		i++;
+		if (num > (9223372036854775807ULL - (*str - '0')) / 10)
+			return (ft_check_flow(sign));
+		num = num * 10 + *str - 48;
+		str++;
 	}
-	if (total > 255)
-		return -1;
-	
-	return ((int)(signe * total));
+	return ((int)(num * sign));
 }

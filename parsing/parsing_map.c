@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:49:11 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 13:06:26 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/08/12 12:00:30 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int ft_check_random_chars(char *line)
     return SUCCESS;
 }
 
-char *ft_bring_map(int fd)
+char *ft_bring_map(int fd, t_data *data)
 {
     char *line;
-    line = get_next_line(fd);
+    line = get_next_line(fd, data);
     while (line)
     {
         int i = 0;
@@ -59,7 +59,7 @@ char *ft_bring_map(int fd)
             i++;
         if ((line[i] == '0' || line[i] == '1'))
             break;
-        line = get_next_line(fd);
+        line = get_next_line(fd, data);
     }
     return line;
 }
@@ -106,24 +106,23 @@ int ft_parsing_map(char *map_path, t_data *data)
     char *line;
     char *single_line_map;
 
-    single_line_map = ft_strdup("");
+    single_line_map = gc_strdup("", &data->addr);
     fd = open(map_path, O_RDONLY);
     if (fd < 0)
         return ERROR;
-    data->map_info->map_height = 0;
-    line = ft_bring_map(fd);
+    data->map->map_height = 0;
+    line = ft_bring_map(fd, data);
     while (line)
     {
-        data->map_info->map_height++;
-        single_line_map = ft_strjoin(single_line_map, line);
-        line = get_next_line(fd);
+        data->map->map_height++;
+        single_line_map = gc_strjoin(single_line_map, line, &data->addr);
+        line = get_next_line(fd, data);
     }
     if (ft_check_random_chars(single_line_map) == ERROR)
         return ERROR;
-    printf("map:{%s}\n", single_line_map);
-    if (ft_check_newlines(single_line_map) == ERROR)
+    if (ft_check_newlines(single_line_map) == ERROR) 
         return ERROR;
-    data->map_info->single_line_map = single_line_map;
+    data->map->single_line_map = single_line_map;
     close(fd);
     return SUCCESS;
 }

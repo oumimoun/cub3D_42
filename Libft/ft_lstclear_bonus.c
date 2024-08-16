@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:53:05 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/23 15:43:36 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/11/11 19:32:12 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/11/20 13:08:57 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*next;
-	t_list	*current;
+	t_list	*tmp;
 
-	if (lst && del)
+	if (!lst || !del)
+		return ;
+	while (*lst)
 	{
-		current = *lst;
-		while (current)
-		{
-			next = current->next;
-			del(current->content);
-			free(current);
-			current = next;
-		}
-		*lst = NULL;
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
 	}
+	lst = NULL;
 }

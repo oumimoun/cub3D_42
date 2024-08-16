@@ -1,11 +1,8 @@
 {
     "files.associations": {
-        "_malloc.h": "c",
-        "get_next_line.h": "c",
-        "mlx42_int.h": "c",
+        "iterator": "c",
         "cub3d.h": "c",
-        "libft.h": "c",
-        "string.h": "c"
-    },
-    // "cmake.sourceDirectory": "/Users/oumimoun/Desktop/cub3D_42/MLX42"
+        "limits.h": "c",
+        "get_next_line.h": "c"
+    }
 }

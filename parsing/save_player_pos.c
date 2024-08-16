@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 11:27:09 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 14:59:09 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:10:17 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int ft_check_players(t_data *data)
     int count;
 
     count  = 0;
-    temp = data->map_info->map;
+    temp = data->map->map_tiles;
     i = 0;
     j = 0;
     while (temp[i])
@@ -58,7 +58,7 @@ int ft_save_player_pos(t_data *data)
     int i;
     int j;
 
-    temp = data->map_info->map;
+    temp = data->map->map_tiles;
     i = 0;
     j = 0;
     while (temp[i])
@@ -68,18 +68,14 @@ int ft_save_player_pos(t_data *data)
         {
             if (ft_is_player_direction(temp[i][j]))
             {
-                data->map_info->player_direction = temp[i][j];
-                data->map_info->player_x = j;
-                data->map_info->player_y = i;
+                data->map->player_direction = temp[i][j];
+                data->map->player_x = j;
+                data->map->player_y = i; 
                 temp[i][j] = '0';
-                printf("player{%c}\n", temp[i][j]);
             }
             j++;
         }
         i++;
     }
-    printf("player_direction{%c}\n", data->map_info->player_direction);
-    printf("player_x{%d}\n", data->map_info->player_x);
-    printf("player_y{%d}\n", data->map_info->player_y);
     return SUCCESS;
 }

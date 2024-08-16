@@ -3,40 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 16:26:15 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/20 14:52:55 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/11/02 17:05:00 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/11/17 15:43:02 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	strflag(char const c, char const *set)
+static int	ft_count_set(char const *s1, char const *set)
 {
-	int	i;
-	int	n;
+	size_t	size;
+	size_t	i;
 
-	n = ft_strlen(set);
-	i = 0;
-	while (i < n)
-	{
-		if (set[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	size_toalloc(char const *s1, char const *set)
-{
-	int	size;
-	int	i;
-	int	len_s1;
-
-	i = 0;
-	len_s1 = ft_strlen(s1);
 	size = ft_strlen(s1);
+	i = 0;
 	while (s1[i] && ft_strchr(set, s1[i]))
 	{
 		size--;
@@ -44,31 +26,33 @@ static int	size_toalloc(char const *s1, char const *set)
 	}
 	if (size == 0)
 		return (0);
-	i = 0;
-	while (len_s1 && ft_strchr(set, s1[len_s1 - 1]))
+	i = ft_strlen(s1) - 1;
+	while (i && ft_strchr(set, s1[i]))
 	{
 		size--;
-		len_s1--;
-		i++;
+		i--;
 	}
 	return (size);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	int		i;
-	int		size;
-	char	*result;
+	char	*copy;
+	size_t	i;
 
 	if (!set || !s1)
 		return (NULL);
-	size = size_toalloc(s1, set);
 	i = 0;
-	result = (char *)malloc(size + 1);
-	if (!result)
-		return (0);
-	while (*s1 && strflag(*s1, set))
-		s1++;
-	ft_strlcpy(result, (char *)s1, size + 1);
-	return (result);
+	if (!*s1 || !ft_strncmp(s1, set, ft_strlen(s1)))
+	{
+		copy = ft_calloc(1, sizeof(char));
+		return (copy);
+	}
+	copy = (char *)malloc(sizeof(char) * (ft_count_set(s1, set) + 1));
+	if (!copy)
+		return (NULL);
+	while (ft_strchr(set, s1[i]))
+		i++;
+	ft_strlcpy(copy, &s1[i], ft_count_set(s1, set) + 1);
+	return (copy);
 }

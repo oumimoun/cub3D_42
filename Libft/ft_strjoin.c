@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 12:30:58 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/23 15:45:00 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/10/31 13:52:35 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/11/17 11:49:26 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,23 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		i;
-	int		len;
-	char	*result;
+	char	*arr;
+	char	*dest;
+	char	*src;
+	size_t	s1_len;
+	size_t	s2_len;
 
-	i = 0;
+	dest = (char *)s1;
+	src = (char *)s2;
 	if (!s1 || !s2)
 		return (NULL);
-	len = ft_strlen(s2) + ft_strlen(s1);
-	result = (char *)malloc((len + 1) * sizeof(char));
-	if (!result)
-		return (0);
-	while (s1[i])
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (s2[i])
-	{
-		result[ft_strlen(s1) + i] = s2[i];
-		i++;
-	}
-	result[i + ft_strlen(s1)] = '\0';
-	return (result);
+	s1_len = ft_strlen(dest);
+	s2_len = ft_strlen(src);
+	arr = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!arr)
+		return (NULL);
+	ft_memmove(arr, dest, s1_len);
+	ft_memmove(arr + s1_len, src, s2_len);
+	arr[s1_len + s2_len] = '\0';
+	return (arr);
 }

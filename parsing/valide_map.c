@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:25:51 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/24 19:33:02 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:12:17 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_fill_map_dimension(t_data *data)
 
     if (!data)
         return ERROR;
-    map = data->map_info->map;
+    map = data->map->map_tiles;
     while (map[i])
     {
         int line_length = ft_strlen(map[i]);
@@ -30,10 +30,8 @@ int ft_fill_map_dimension(t_data *data)
     }
     if (i == 0)
         return ERROR;
-    data->map_info->map_width = max_width;
-    printf("map_width:-->%d\n", data->map_info->map_width);
-    data->map_info->map_height = i;
-    printf("map_height:-->%d\n", data->map_info->map_height);
+    data->map->map_width = max_width;
+    data->map->map_height = i;
     return SUCCESS;
 }
 
@@ -52,7 +50,7 @@ int ft_only_ones(char *str)
 int ft_start_with_one(t_data *data)
 {
     char **map;
-    map = data->map_info->map;
+    map = data->map->map_tiles;
     int i = 0;
     int j;
     while (map[i])
@@ -70,47 +68,29 @@ int ft_start_with_one(t_data *data)
 int ft_check_zero_surroundings(char **map, int i, int j)
 {
     if (map[i][j + 1] == ' ' || map[i][j + 1] == '\0')
-    {
-        printf("1\n");
         return ERROR;
-    }
     if (j > 0 && map[i][j - 1] == ' ')
-    {
-        printf("2\n");
         return ERROR;
-    }
     if (map[i - 1][j] == ' ')
-    {
-        printf("i========|%d|\n", i - 1);
-        printf("j ========|%d|\n", j);
-        printf("===============|%c|\n", map[i - 1][j]);
         return ERROR;
-    }
     if (map[i + 1] && map[i + 1][j] == ' ')
-    {
-        printf("4\n");
         return ERROR;
-    }
     return SUCCESS;
 }
 
 int ft_valide_map(t_data *data)
 {
-    char **temp = data->map_info->map;
+    char **temp = data->map->map_tiles;
     int i, j;
-
 
     if (ft_only_ones(temp[0]) == ERROR)
         return ERROR;
-    if (ft_only_ones(temp[data->map_info->map_height - 1]) == ERROR)
+    if (ft_only_ones(temp[data->map->map_height - 1]) == ERROR)
         return ERROR;
-
-
     if (ft_start_with_one(data) == ERROR)
         return ERROR;
-
     i = 1;
-    while (i < data->map_info->map_height - 1)
+    while (i < data->map->map_height - 1)
     {
         j = 0;
         while (temp[i][j])
@@ -118,11 +98,7 @@ int ft_valide_map(t_data *data)
             if (temp[i][j] == '0')
             {
                 if (ft_check_zero_surroundings(temp, i, j) == ERROR)
-                {
-                    printf("===============|%c|\n", temp[i][j]);
-                    printf("la asa7bi\n");
                     return ERROR;
-                }
             }
             j++;
         }

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 19:52:28 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/20 15:33:22 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/11/05 11:52:18 by olamrabt          #+#    #+#             */
+/*   Updated: 2024/08/12 11:38:04 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "../cub3d.h"
 
 static int	count_str(const char *str, char c)
 {
@@ -41,13 +41,13 @@ static int	len_str(const char *str, char c)
 	return (i);
 }
 
-static char	*ft_allocated_str(const char *str, char c)
+static char	*ft_allocated_str(const char *str, char c, t_data *data)
 {
 	char	*result;
 	int		len_string;
 
 	len_string = len_str(str, c);
-	result = (char *)malloc((len_string + 1) * sizeof(char));
+	result = (char *)ft_calloc_ac(&data->addr, (len_string + 1), sizeof(char));
 	if (!result)
 		return (NULL);
 	result[len_string] = '\0';
@@ -56,29 +56,16 @@ static char	*ft_allocated_str(const char *str, char c)
 	return (result);
 }
 
-static void	ft_free(char **result)
-{
-	int	i;
 
-	i = 0;
-	while (result[i])
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
-}
-
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, t_data *data)
 {
 	int		i;
 	char	**result;
 
 	if (!s)
 		return (NULL);
-	result = (char **)malloc((count_str(s, c) + 1) * sizeof(char *));
-	if (!result)
-		return (NULL);
+	result = (char **)ft_calloc_ac(&data->addr, \
+		(count_str(s, c) + 1), sizeof(char *));
 	i = 0;
 	while (*s)
 	{
@@ -86,9 +73,9 @@ char	**ft_split(char const *s, char c)
 			s++;
 		if (*s)
 		{
-			result[i] = ft_allocated_str(s, c);
+			result[i] = ft_allocated_str(s, c, data);
 			if (!result[i])
-				return (ft_free(result), NULL);
+				return (NULL);
 			i++;
 		}
 		while (*s && (*s != c))

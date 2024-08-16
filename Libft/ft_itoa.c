@@ -3,57 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 19:14:08 by oumimoun          #+#    #+#             */
-/*   Updated: 2023/11/20 12:22:10 by oumimoun         ###   ########.fr       */
+/*   Created: 2023/11/07 11:37:17 by olamrabt          #+#    #+#             */
+/*   Updated: 2023/11/17 13:13:59 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	len_result(int n)
+static char	*put_str(int n, char *str, int count)
 {
-	int	len;
-
-	len = 0;
+	str[count] = '\0';
 	if (n < 0)
 	{
-		n *= (-1);
-		len++;
+		str[0] = '-';
+		n *= -1;
+		while (--count)
+		{
+			str[count] = n % 10 + 48;
+			n /= 10;
+		}
+		return (str);
 	}
-	while (n > 0)
+	while (count--)
 	{
+		str[count] = n % 10 + 48;
 		n /= 10;
-		len++;
 	}
-	return (len);
+	return (str);
 }
 
 char	*ft_itoa(int n)
 {
-	int		len;
-	char	*result;
+	size_t	count;
+	int		temp;
+	char	*str;
 
+	count = 1;
+	temp = n;
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
-	if (n == 0)
-		return (ft_strdup("0"));
-	len = len_result(n);
-	result = (char *)malloc((sizeof(char) * (len + 1)));
-	if (!result)
-		return (NULL);
-	result[len--] = '\0';
+	while (temp / 10)
+	{
+		temp /= 10;
+		count++;
+	}
 	if (n < 0)
-	{
-		result[0] = '-';
-		n *= -1;
-	}
-	while (n > 0)
-	{
-		result[len] = 48 + (n % 10);
-		n /= 10;
-		len--;
-	}
-	return (result);
+		count++;
+	str = (char *)malloc(sizeof(char) * (count + 1));
+	if (!str)
+		return (NULL);
+	return (put_str(n, str, count));
 }
