@@ -29,23 +29,36 @@ void draw_rect(mlx_image_t *img, int x, int y, int color)
     }
 }
 
+
+
 void draw_circle(mlx_image_t *img, int x_center, int y_center)
 {
-    int radius = 2;
     int x, y;
+    int radius = SIZE / 10;
+    int radius_squared = radius * radius;
 
-    for (y = 0; y <= radius; y++)
+    x = x_center - radius;
+    // Iterate over the square bounding box of the circle
+    while (x <= x_center + radius)
     {
-        for (x = 0; x <= radius; x++)
+        y = y_center - radius;
+        while (y <= y_center + radius)
         {
-            if (x * x + y * y <= radius * radius)
+            // Check if the point is inside the circle
+            int dx = x - x_center;
+            int dy = y - y_center;
+            if (dx * dx + dy * dy <= radius_squared)
             {
-                protected_ppx(img, x_center + x, y_center + y, get_rgba(255, 0, 0, 255));
-                protected_ppx(img, x_center - x, y_center + y, get_rgba(255, 0, 0, 255));
-                protected_ppx(img, x_center + x, y_center - y, get_rgba(255, 0, 0, 255));
-                protected_ppx(img, x_center - x, y_center - y, get_rgba(255, 0, 0, 255));
+                // Check if the point is within the image boundaries
+                if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+                {
+                    protected_ppx(img, x, y, get_rgba(255, 0, 0, 255));
+                    
+                }
             }
+            y++;
         }
+        x++;
     }
 }
 

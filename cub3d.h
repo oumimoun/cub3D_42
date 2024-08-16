@@ -20,7 +20,7 @@
 #define ERROR 1
 #define SUCCESS 0
 
-#define SIZE 8
+#define SIZE 32
 #define FOV_ANGL (M_PI / 3)
 #define MOVE_SPEED 2.0
 #define ROT_SPEED (2 * M_PI / 180)
@@ -44,7 +44,7 @@ typedef struct s_map
 
 } t_map;
 
-typedef struct player
+typedef struct s_player
 {
 	double x;
 	double y;
@@ -53,7 +53,7 @@ typedef struct player
 	double rotation_angle;
 } t_player;
 
-typedef struct point
+typedef struct s_point
 {
 	double x;
 	double y;

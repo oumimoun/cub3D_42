@@ -19,7 +19,7 @@ void draw_map (t_data *data)
 	{
 		j = 0;
 		y = 0;
-		while (j < ft_strlen(data->map->map_tiles[i])) // 
+		while (j < data->map->map_width) // 
 		{
 			if (data->map->map_tiles[i][j])
 				draw_rect(data->img, y, x, (int)data->map->map_tiles[i][j] - 48);
@@ -54,9 +54,9 @@ int	main(int ac, char **av)
 		return (free(data), ft_putstr_fd("Error\nmalloc\n", 2), ERROR);
 	if (ft_parsing(av[1], data) == ERROR)
 		return (free(data), ft_addrclear(&data->addr, free), ERROR);
-	data->player.x = data->map->player_x * SIZE;
-	data->player.y = data->map->player_y * SIZE;
-	printf("player[x: %.f , y: %.f]\n", data->player.x, data->player.y);
+	data->player.x = data->map->player_x * SIZE + SIZE / 2;
+	data->player.y = data->map->player_y * SIZE + SIZE / 2;
+	// printf("player[x: %.f , y: %.f]\n", data->player.x, data->player.y);
 	data->player.turn_direction = 1;
 	data->player.walk_direction = 0;
 	data->player.rotation_angle = 0;
@@ -64,8 +64,10 @@ int	main(int ac, char **av)
 	// TODO protect MLX utils if each one fails
 	data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	if (!data->mlx)
-		exit(EXIT_FAILURE);
+		exit(ERROR);
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (!data->img)
+		exit(ERROR);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	draw_map(data);
 	draw_player(data);
