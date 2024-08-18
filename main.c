@@ -56,11 +56,10 @@ int	main(int ac, char **av)
 		return (free(data), ft_addrclear(&data->addr, free), ERROR);
 	data->player.x = data->map->player_x * SIZE + SIZE / 2;
 	data->player.y = data->map->player_y * SIZE + SIZE / 2;
-	// printf("player[x: %.f , y: %.f]\n", data->player.x, data->player.y);
-	data->player.turn_direction = 1;
+	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
-	data->player.rotation_angle = 0;
-
+	data->player.rotation_angle = M_PI / 2;
+	
 	// TODO protect MLX utils if each one fails
 	data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	if (!data->mlx)

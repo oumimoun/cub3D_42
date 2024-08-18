@@ -21,7 +21,7 @@
 #define SUCCESS 0
 
 #define SIZE 32
-#define FOV_ANGL (M_PI / 3)
+#define FOV_ANGL 60
 #define MOVE_SPEED 2.0
 #define ROT_SPEED (2 * M_PI / 180)
 
@@ -46,11 +46,11 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	double x;
-	double y;
-	double turn_direction;
-	double walk_direction;
-	double rotation_angle;
+	double x;  // player x position in pixels
+	double y;  // player y position in pixels
+	double turn_direction; // -1 if left, 1 if right
+	double walk_direction; // -1 if back, 1 if front
+	double rotation_angle; // player rotation angle in radians
 } t_player;
 
 typedef struct s_point

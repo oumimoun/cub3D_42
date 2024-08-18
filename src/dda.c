@@ -202,10 +202,10 @@ void draw_rays(t_data *data)
 
     i = 0;
     angle_incr = FOV_ANGL / WIDTH;
-    ray_angle = normalize_angle(data->player.rotation_angle - (FOV_ANGL / 2)); // orig
+    ray_angle = normalize_angle(data->player.rotation_angle - (FOV_ANGL / 2));
     while (i < WIDTH)
     {
-        ft_dda(data, ray_angle);
+        // ft_dda(data, ray_angle);
         ray_angle = normalize_angle(ray_angle + angle_incr);
         i++;
     }
