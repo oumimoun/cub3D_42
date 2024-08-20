@@ -58,7 +58,33 @@ int	main(int ac, char **av)
 	data->player.y = data->map->player_y * SIZE + SIZE / 2;
 	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
-	data->player.rotation_angle = M_PI / 2;
+	if (data->map->player_direction == 'N')
+		data->player.rotation_angle = 3 * M_PI / 2;
+	else if (data->map->player_direction == 'S')
+		data->player.rotation_angle = M_PI / 2;
+	else if (data->map->player_direction == 'E')
+		data->player.rotation_angle = 0;
+	else if (data->map->player_direction == 'W')
+		data->player.rotation_angle = M_PI;
+
+	data->rays.ray_angle = 0;
+	data->rays.x_intersection = 0;
+	data->rays.y_intersection = 0;
+	data->rays.distance = 0;
+	data->rays.is_horizontal = 0;
+	data->rays.is_vertical = 0;
+	data->rays.column_id = 0;
+	data->rays.wall_hit_x = 0;
+	data->rays.wall_hit_y = 0;
+	data->rays.is_facing_down = 0;
+	data->rays.is_facing_up = 0;
+	data->rays.is_facing_right = 0;
+	data->rays.is_facing_left = 0;
+	data->rays.x_step = 0;
+	data->rays.y_step = 0;
+	
+
+
 	
 	// TODO protect MLX utils if each one fails
 	data->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);

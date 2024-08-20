@@ -119,9 +119,9 @@ int ft_parsing(char *map_path, t_data *data)
         return ERROR;
     if (ft_fill_map_dimension(data) == ERROR)
         return ERROR;
-    if (ft_valide_map(data) == ERROR)
-        return ERROR;
     if (ft_fill_map_with_sp(data) == ERROR)
+        return ERROR;
+    if (ft_valide_map(data) == ERROR)
         return ERROR;
     return SUCCESS;
 }

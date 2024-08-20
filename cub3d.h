@@ -27,10 +27,11 @@
 
 typedef struct s_map
 {
+	double player_x;
+    double player_y;
+    int tile_size;
 	int map_width;
 	int map_height;
-	int player_x;
-	int player_y;
 	char **map_tiles;
 	char *no_texture_path;
 	char *so_texture_path;
@@ -69,6 +70,28 @@ typedef struct dda_step
 } t_dda;
 
 
+typedef struct s_ray
+{
+	int 			column_id;
+	double			ray_angle;
+	double			x_intersection;
+	double			y_intersection;
+	double			distance;
+	int				is_horizontal;
+	int				is_vertical;
+	int 			is_facing_down;
+	int 			is_facing_up;
+	int 			is_facing_right;
+	int 			is_facing_left;
+	int 			wall_hit_x;
+	int 			wall_hit_y;
+
+	double			x_step;
+	double			y_step;
+
+
+}					t_ray;
+
 typedef struct s_addr
 {
 	void				*address;
@@ -82,6 +105,7 @@ typedef struct s_data
 	t_addr *addr;
 	t_player player;
 	t_map *map;
+	t_ray rays;
 }	t_data;
 
 int		add_addr(t_addr **list, t_addr *new);
@@ -105,6 +129,8 @@ double normalize_angle(double angle);
 int is_wall(t_data *data, int x, int y);
 double get_distance(t_data *data, double x, double y);
 void draw_rays(t_data *data); // change name later
+
+void line(mlx_image_t *img, int x1, int y1, int x2, int y2, int color);
 
 
 //=======================================================================

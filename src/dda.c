@@ -16,18 +16,17 @@ int is_wall(t_data *data, int x, int y)
     int map_x;
     int map_y;
 
-    map_y = y / (data->map->map_width);
-    map_x = x / ft_strlen(data->map->map_tiles[map_y]); // FIXME
+    map_x = floor(x / (data->map->tile_size));
+    map_y = floor(y / (data->map->tile_size));
 
-    printf("map_x : %d, map_y: %d\n", map_x, map_y);
-    printf("x : %d, y: %d\n", x, y);
-
-    if (map_x >= 0 && map_x < data->map->map_height && map_y >= 0 && map_y < ft_strlen(data->map->map_tiles[y / data->map->map_height]))
+    if (map_x < 0 || map_x >= data->map->map_width || map_y < 0 || map_y >= data->map->map_height)
+        return 1;
+    if (data->map->map_tiles[map_y][map_x])
     {
-        if (data->map->map_tiles[map_x][map_y] == 1) // FIXME
+        if (data->map->map_tiles[map_y][map_x] == '1')
             return 1;
     }
-    // printf("map addr : %p\n", data->map);
+
     return 0;
 }
 
@@ -144,69 +143,68 @@ t_dda get_vert_inters(t_data *data, double angle)
     return step;
 }
 
-double ft_dda(t_data *data, double tmp_angle)
+
+
+double ft_dda(t_data *data, int column_id)
 {
-    t_dda step_x;
-    t_dda step_y;
-    int i;
+    // ft_horizotale
+    // ft_vertical
 
-    i = 0;
-    step_x = get_hor_inters(data, tmp_angle);
-    step_y = get_vert_inters(data, tmp_angle);
+    // first horizontal intersection
 
-    // printf(" h_i [ %d, %d], player [ %d, %d]\n", (int)step_x.start.x, (int)step_x.start.y, (int)data->player.x, (int)data->player.y);
-    // printf(" v_i [ %d, %d], player [ %d, %d]\n", (int)step_y.start.x, (int)step_y.start.y, (int)data->player.x, (int)data->player.y);
+    data->rays.y_intersection = floor(data->player.y / SIZE) * SIZE;
+    data->rays.x_intersection = data->player.x + fabs(data->rays.y_intersection - data->player.y) / tan(data->rays.ray_angle);
 
-    while (i < WIDTH / SIZE)
+
+
+
+}
+
+// Bresenham's Line Drawing Algorithm
+void line(mlx_image_t *img, int x1, int y1, int x2, int y2, int color)
+{
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+    int err = dx - dy;
+
+    while (1)
     {
-        if (step_x.end.x < 0 || step_x.end.x >= WIDTH || step_x.end.y < 0 || step_x.end.y >= HEIGHT ||
-            step_y.end.x < 0 || step_y.end.x >= WIDTH || step_y.end.y < 0 || step_y.end.y >= HEIGHT)
+        protected_ppx(img, x1, y1, color); // Set the pixel at the current position
+
+        if (x1 == x2 && y1 == y2)
             break;
-        step_x.distance = get_distance(data, step_x.end.x, step_x.end.y);
-        step_y.distance = get_distance(data, step_y.end.x, step_y.end.y);
 
-        step_x.end.x += step_x.d_x;
-        step_x.end.y += step_x.d_y;
-
-        step_y.end.x += step_y.d_x;
-        step_y.end.y += step_y.d_y;
-        i++;
+        int e2 = 2 * err;
+        if (e2 > -dy)
+        {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx)
+        {
+            err += dx;
+            y1 += sy;
+        }
     }
-    // printf("distance 1 : %d, distance 2: %d \n", step_x.distance, step_y.distance);
-
-    if (step_x.distance >= step_y.distance)
-    {
-        render_wall(data, step_y.distance, step_y.end.x);
-        draw_line(data, data->player.x, data->player.y, step_y.end.x, step_y.end.y);
-    }
-    else
-    {
-        render_wall(data, step_x.distance, step_x.end.x);
-        draw_line(data, data->player.x, data->player.y, step_x.end.x, step_x.end.y);
-    }
-
-    // printf("angle : %.2f, step1_dx: %.2f ,step1_dy: %.2f", tmp_angle, step_x.d_x, step_x.d_y);
-    // printf(" step2_dx: %.2f ,step2_dy: %.2f\n", step_y.d_x, step_y.d_y);
-    return 0;
-
-    // if (step_x.distance <= step_y.distance)
-    //     return draw_line(data, data->player.x, data->player.y, (int)step_x.end.x, (int)step_x.end.y);
-    // return draw_line(data, data->player.x, data->player.y, (int)step_y.end.x, (int)step_y.end.y);
 }
 
 void draw_rays(t_data *data)
 {
-    double ray_angle;
     double angle_incr;
-    int i;
-
-    i = 0;
     angle_incr = FOV_ANGL / WIDTH;
-    ray_angle = normalize_angle(data->player.rotation_angle - (FOV_ANGL / 2));
-    while (i < WIDTH)
+    data->rays.ray_angle = normalize_angle(data->player.rotation_angle - (FOV_ANGL / 2));
+    data->rays.is_facing_down = data->player.rotation_angle > 0 && data->player.rotation_angle < M_PI;
+    data->rays.is_facing_up = !data->rays.is_facing_down;
+    data->rays.is_facing_right = data->player.rotation_angle < (M_PI / 2) || data->player.rotation_angle > (3 * M_PI / 2);
+    data->rays.is_facing_left = !data->rays.is_facing_right;
+    data->rays.column_id = 0;
+    while (data->rays.column_id < WIDTH)
     {
-        // ft_dda(data, ray_angle);
-        ray_angle = normalize_angle(ray_angle + angle_incr);
-        i++;
+        ft_dda(data, data->rays.ray_angle);
+        data->rays.ray_angle = normalize_angle(data->rays.ray_angle + angle_incr);
+        data->rays.column_id++;
     }
+    
 }
