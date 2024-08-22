@@ -143,19 +143,26 @@ t_dda get_vert_inters(t_data *data, double angle)
     return step;
 }
 
-
-
 double ft_dda(t_data *data, int column_id)
 {
-    // ft_horizotale
-    // ft_vertical
-
     // first horizontal intersection
-
-    data->rays.y_intersection = floor(data->player.y / SIZE) * SIZE;
+    if (data->rays.is_facing_up)
+        data->rays.y_intersection = floor(data->player.y / SIZE) * SIZE;
+    else if (data->rays.is_facing_down)
+        data->rays.y_intersection = floor(data->player.y / SIZE) * SIZE + SIZE;
     data->rays.x_intersection = data->player.x + fabs(data->rays.y_intersection - data->player.y) / tan(data->rays.ray_angle);
 
+    // horizontal step
+    data->rays.y_step = SIZE;
+    if (data->rays.is_facing_up)
+        data->rays.y_step *= -1;
+    data->rays.x_step = data->rays.y_step / tan(data->rays.ray_angle);
+    if (data->rays.is_facing_left && data->rays.y_step > 0)
+        data->rays.x_step *= -1;
+    if (data->rays.is_facing_right && data->rays.y_step < 0)
+        data->rays.x_step *= -1;
 
+    
 
 
 }
@@ -192,9 +199,10 @@ void line(mlx_image_t *img, int x1, int y1, int x2, int y2, int color)
 
 void draw_rays(t_data *data)
 {
-    double angle_incr;
-    angle_incr = FOV_ANGL / WIDTH;
+    double angle_i;
+    angle_i = FOV_ANGL / WIDTH;
     data->rays.ray_angle = normalize_angle(data->player.rotation_angle - (FOV_ANGL / 2));
+
     data->rays.is_facing_down = data->player.rotation_angle > 0 && data->player.rotation_angle < M_PI;
     data->rays.is_facing_up = !data->rays.is_facing_down;
     data->rays.is_facing_right = data->player.rotation_angle < (M_PI / 2) || data->player.rotation_angle > (3 * M_PI / 2);
@@ -202,9 +210,8 @@ void draw_rays(t_data *data)
     data->rays.column_id = 0;
     while (data->rays.column_id < WIDTH)
     {
+        data->rays.ray_angle = normalize_angle(data->rays.ray_angle + angle_i);
         ft_dda(data, data->rays.ray_angle);
-        data->rays.ray_angle = normalize_angle(data->rays.ray_angle + angle_incr);
         data->rays.column_id++;
     }
-    
 }
