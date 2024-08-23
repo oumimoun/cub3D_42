@@ -21,7 +21,7 @@
 #define SUCCESS 0
 
 #define SIZE 32
-#define FOV_ANGL 60
+#define FOV_ANGL (60 * M_PI / 180)
 #define MOVE_SPEED 2.0
 #define ROT_SPEED (2 * M_PI / 180)
 
@@ -74,8 +74,12 @@ typedef struct s_ray
 {
 	int 			column_id;
 	double			ray_angle;
-	double			x_intersection;
-	double			y_intersection;
+	double			x_horiz_intersection;
+	double			y_horiz_intersection;
+
+	double			x_vertic_intersection;
+	double			y_vertic_intersection;
+	
 	double			distance;
 	int				is_horizontal;
 	int				is_vertical;
@@ -88,6 +92,9 @@ typedef struct s_ray
 
 	double			x_step;
 	double			y_step;
+
+	int 			found_horz_hit;
+	int 			found_vert_hit;
 
 
 }					t_ray;

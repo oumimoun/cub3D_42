@@ -68,8 +68,11 @@ int	main(int ac, char **av)
 		data->player.rotation_angle = M_PI;
 
 	data->rays.ray_angle = 0;
-	data->rays.x_intersection = 0;
-	data->rays.y_intersection = 0;
+	data->rays.x_horiz_intersection = 0;
+	data->rays.y_horiz_intersection = 0;
+	data->rays.x_vertic_intersection = 0;
+	data->rays.y_vertic_intersection = 0;
+	
 	data->rays.distance = 0;
 	data->rays.is_horizontal = 0;
 	data->rays.is_vertical = 0;

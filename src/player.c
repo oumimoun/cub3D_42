@@ -4,10 +4,10 @@
  {
 	// printf ("player x : %d , player y : %d\n", player.x, player.x);
 	draw_circle(data->img, data->player.x, data->player.y);
-	line(data->img, data->player.x, data->player.y,\
-	 data->player.x + cos(data->player.rotation_angle) * 50,\
-	  data->player.y + sin(data->player.rotation_angle) * 50,\
-	   get_rgba(255, 0, 0, 255));
+	// line(data->img, data->player.x, data->player.y,\
+	//  data->player.x + cos(data->player.rotation_angle) * 50,\
+	//   data->player.y + sin(data->player.rotation_angle) * 50,\
+	//    get_rgba(255, 0, 0, 255));
 	draw_rays(data);
 
  }
@@ -51,10 +51,10 @@ void key_event_handler(void *arg)
 		data->player.walk_direction = -1;
 	else if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 		data->player.walk_direction = 1;
-    else if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-		data->player.walk_direction = 1;
-	else if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-		data->player.walk_direction = -1;
+    // else if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+	// 	data->player.walk_direction = 1;
+	// else if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+	// 	data->player.walk_direction = -1;
     else 
     {
 		data->player.walk_direction = 0;
