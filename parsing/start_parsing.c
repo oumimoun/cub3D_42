@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   start_parsing.c                                    :+:      :+:    :+:   */
@@ -6,122 +6,91 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 20:21:20 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/07/25 14:16:39 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/09/08 10:28:02 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	ft_strcmp(const char *s1, const char *s2)
+int	ft_error_suite(int i)
 {
-	int	i;
-
-	if (!s1 || !s2)
-		return (-1);
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (i == 9)
+		return (ft_putstr_fd("Map doesn't have player\n", 2), exit(ERROR), 1);
+	if (i == 10)
+		return (ft_putstr_fd("Map has more than one player\n", 2), \
+			exit(ERROR), 1);
+	if (i == 11)
+		return (ft_putstr_fd("Map should be surrounded by 1\n", 2), \
+			exit(ERROR), 1);
+	if (i == 12)
+		return (ft_putstr_fd("Duplicated vars\n", 2), exit(ERROR), 1);
+	if (i == 13)
+		return (ft_putstr_fd("RGB should be between 0 and 255\n", 2), \
+			exit(ERROR), 1);
+	if (i == 14)
+		return (ft_putstr_fd("Missing vars\n", 2), exit(ERROR), 1);
+	return (0);
 }
 
-int ft_parse_map_path(char *map_path)
+int	ft_error(int i)
 {
-    int fd;
-
-    fd = open(map_path, O_RDONLY);
-    if (fd < 0)
-        return (ft_putstr_fd("Error\nWrong path\n", 2), ERROR);
-    close(fd);
-    if (map_path[0] == '.')
-    {
-        if (ft_strcmp(ft_strchr((map_path + 1), '.'), ".cub"))
-            return (ft_putstr_fd("Error\npath should end with \".cub\"\n", 2), ERROR);
-    }
-    else
-    {
-        if (ft_strcmp(ft_strchr(map_path, '.'), ".cub"))
-            return (ft_putstr_fd("Error\npath should end with \".cub\"\n", 2), ERROR);
-    }
-    return (SUCCESS);
+	ft_putstr_fd("Error\n", 2);
+	if (i == 1)
+		return (ft_putstr_fd("Wrong path\n", 2), exit(ERROR), 1);
+	if (i == 2)
+		return (ft_putstr_fd("Map should end with .cub\n", 2), exit(ERROR), 1);
+	if (i == 3)
+		return (ft_putstr_fd("Name of vars isn't valide\n", 2), exit(ERROR), 1);
+	if (i == 4)
+		return (ft_putstr_fd("Random char in the map\n", 2), exit(ERROR), 1);
+	if (i == 5)
+		return (ft_putstr_fd("Map contains newline\n", 2), exit(ERROR), 1);
+	if (i == 6)
+		return (ft_putstr_fd("Not a valid RGB\n", 2), exit(ERROR), 1);
+	if (i == 7)
+		return (ft_putstr_fd("Empty map\n", 2), exit(ERROR), 1);
+	if (i == 8)
+		return (ft_putstr_fd("Map contains tabs\n", 2), exit(ERROR), 1);
+	ft_error_suite(i);
+	return (0);
 }
 
-int ft_valide_wall_direction(char *line)
+int	ft_parsing_suite(t_map **map, t_addr **addr)
 {
-    if ((ft_strncmp(line, "NO", 2) == 0) && line[2] == ' ')
-        return SUCCESS;
-    if (ft_strncmp(line, "SO", 2) == 0 && line[2] == ' ')
-        return SUCCESS;
-    if (ft_strncmp(line, "WE", 2) == 0 && line[2] == ' ')
-        return SUCCESS;
-    if (ft_strncmp(line, "EA", 2) == 0 && line[2] == ' ')
-        return SUCCESS;
-    if (ft_strncmp(line, "F", 1) == 0 && line[1] == ' ')
-        return SUCCESS;
-    if (ft_strncmp(line, "C", 1) == 0 && line[1] == ' ')
-        return SUCCESS;
-    return (ERROR);
+	if (ft_has_tabs(map) == ERROR)
+		return (ERROR);
+	if (ft_check_players(map) == ERROR)
+		return (ERROR);
+	if (ft_save_player_pos(map) == ERROR)
+		return (ERROR);
+	if (ft_fill_map_dimension(map) == ERROR)
+		return ((ft_error(-1), (ERROR)));
+	if (ft_fill_map_with_sp(map, addr) == ERROR)
+		return (((ft_error(-1), (ERROR))));
+	if (ft_valide_map(map) == ERROR)
+		return ((ft_error(11), (ERROR)));
+	if (ft_stores_f_c(map, addr) == ERROR)
+		return (ft_error(-1), (ERROR));
+	return (SUCCESS);
 }
 
-int ft_parsing_vars(char *map_path, t_data *data)
+int	ft_parsing(char *map_path, t_map **map, t_addr **addr)
 {
-    int fd;
-    char *line;
-    char *single_line_vars;
-
-    single_line_vars = gc_strdup("", &data->addr);
-    fd = open(map_path, O_RDONLY);
-    if (fd < 0)
-        return (ERROR);
-    line = get_next_line(fd, data);
-    while (line)
-    {
-        int i = 0;
-        while (line[i] == ' ' || line[i] == '\t')
-            i++;
-        if (line[i] == '\n')
-        {
-            line = get_next_line(fd, data);
-            continue;
-        }
-        if (line[i] == '0' || line[i] == '1')
-            break;
-        if (ft_valide_wall_direction(&line[i]) == ERROR)
-            return ft_putstr_fd("Error\nwrong map parameters\n", 2), ERROR;
-        single_line_vars = gc_strjoin(single_line_vars, line, &data->addr);
-        line = get_next_line(fd, data);
-    }
-    data->map->single_line_vars = single_line_vars;
-    close(fd);
-    return SUCCESS;
-}
-
-int ft_parsing(char *map_path, t_data *data)
-{
-    if (ft_parse_map_path(map_path) == ERROR)
-        return (ERROR);
-    if (ft_parsing_vars(map_path, data) == ERROR)
-        return (ERROR);
-    if (ft_double_check_vars(data) == ERROR)
-        return ERROR;
-    if (ft_parsing_map(map_path, data) == ERROR)
-        return ERROR;
-    if (ft_save_vars(map_path, data) == ERROR)
-        return ERROR;
-    if (ft_check_vars(data) == ERROR)
-        return ERROR;
-    if (ft_split_map(data) == ERROR)
-        return ERROR;
-    if (ft_has_tabs(data) == ERROR)
-        return ERROR;
-    if (ft_check_players(data) == ERROR)
-        return ERROR;
-    if (ft_save_player_pos(data) == ERROR)
-        return ERROR;
-    if (ft_fill_map_dimension(data) == ERROR)
-        return ERROR;
-    if (ft_fill_map_with_sp(data) == ERROR)
-        return ERROR;
-    if (ft_valide_map(data) == ERROR)
-        return ERROR;
-    return SUCCESS;
+	if (ft_parse_map_path(map_path) == ERROR)
+		return (ft_error(1), (ERROR));
+	if (ft_parse_map_variables(map_path, map, addr) == ERROR)
+		return (ft_error(2), (ERROR));
+	if (ft_double_check_vars(map) == ERROR)
+		return (ERROR);
+	if (ft_parsing_map(map_path, map, addr) == ERROR)
+		return (ERROR);
+	if (ft_save_vars(map_path, map, addr) == ERROR)
+		return (ft_error(-1), (ERROR));
+	if (ft_check_vars(map, addr) == ERROR)
+		return (ERROR);
+	if (ft_split_map(map, addr) == ERROR)
+		return (ERROR);
+	if (ft_parsing_suite(map, addr) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
 }

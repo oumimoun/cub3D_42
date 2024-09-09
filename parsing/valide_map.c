@@ -6,110 +6,81 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:25:51 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/08/18 16:43:13 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/09/02 01:06:47 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int ft_fill_map_dimension(t_data *data)
+int	ft_fill_map_dimension_suite(t_map **map, int max_width, int i)
 {
-    int i = 0;
-    int max_width = 0;
-    char **map;
-
-    if (!data)
-        return ERROR;
-    map = data->map->map_tiles;
-    while (map[i])
-    {
-        int line_length = ft_strlen(map[i]);
-        if (line_length > max_width)
-            max_width = line_length;
-        i++;
-    }
-    if (i == 0)
-        return ERROR;
-    data->map->map_width = max_width;
-    // printf("map_width:-->%d\n", data->map->map_width);
-    data->map->map_height = i;
-    // printf("map_height:-->%d\n", data->map->map_height);
-    if (i > max_width)
-        data->map->tile_size = WIDTH / i;
-    else
-        data->map->tile_size = WIDTH / max_width;
-    printf("tilesize:-->%d\n", data->map->tile_size);
-    return SUCCESS;
+	if (i == 0)
+		return (ERROR);
+	(*map)->map_width = max_width;
+	(*map)->map_height = i;
+	if (i > max_width)
+		(*map)->tile_size = WIDTH / i;
+	else
+		(*map)->tile_size = HEIGHT / max_width;
+	if ((*map)->tile_size > TILE_SIZE)
+		(*map)->tile_size = TILE_SIZE * 0.3;
+	return (SUCCESS);
 }
 
-int ft_only_ones(char *str)
+int	ft_fill_map_dimension(t_map **map_st)
 {
-    int i = 0;
-    while (str[i])
-    {
-        if (str[i] != ' ' && str[i] != '1')
-            return ERROR;
-        i++;
-    }
-    return SUCCESS;
+	char	**map;
+	int		i;
+	int		max_width;
+	int		line_length;
+
+	if (!map_st || !(*map_st))
+		return (ERROR);
+	map = (*map_st)->map_tiles;
+	max_width = 0;
+	i = 0;
+	while (map[i])
+	{
+		line_length = ft_strlen(map[i]);
+		if (line_length > max_width)
+			max_width = line_length;
+		i++;
+	}
+	if (ft_fill_map_dimension_suite(map_st, max_width, i) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
 }
 
-int ft_start_with_one(t_data *data)
+int	ft_only_ones(char *str)
 {
-    char **map;
-    map = data->map->map_tiles;
-    int i = 0;
-    int j;
-    while (map[i])
-    {
-        j = 0;
-        while (map[i][j] == ' ')
-            j++;
-        if (map[i][j] != '1')
-            return ERROR;
-        i++;
-    }
-    return SUCCESS;
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '1')
+			return (ERROR);
+		i++;
+	}
+	return (SUCCESS);
 }
 
-int ft_check_zero_surroundings(char **map, int i, int j)
+int	ft_start_with_one(t_map **map_st)
 {
-    if (map[i][j + 1] == ' ' || map[i][j + 1] == '\0')
-        return ERROR;
-    if (j > 0 && map[i][j - 1] == ' ')
-        return ERROR;
-    if (map[i - 1][j] == ' ')
-        return ERROR;
-    if (map[i + 1] && map[i + 1][j] == ' ')
-        return ERROR;
-    return SUCCESS;
-}
+	char	**map;
+	int		i;
+	int		j;
 
-int ft_valide_map(t_data *data)
-{
-    char **temp = data->map->map_tiles;
-    int i, j;
-
-    if (ft_only_ones(temp[0]) == ERROR)
-        return ERROR;
-    if (ft_only_ones(temp[data->map->map_height - 1]) == ERROR)
-        return ERROR;
-    if (ft_start_with_one(data) == ERROR)
-        return ERROR;
-    i = 1;
-    while (i < data->map->map_height - 1)
-    {
-        j = 0;
-        while (temp[i][j])
-        {
-            if (temp[i][j] == '0')
-            {
-                if (ft_check_zero_surroundings(temp, i, j) == ERROR)
-                    return ERROR;
-            }
-            j++;
-        }
-        i++;
-    }
-    return SUCCESS;
+	i = 0;
+	map = (*map_st)->map_tiles;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j] == ' ')
+			j++;
+		if (map[i][j] != '1')
+			return (ERROR);
+		i++;
+	}
+	return (SUCCESS);
 }
