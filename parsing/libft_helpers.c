@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:01:28 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/09/09 09:47:26 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:24:43 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@ static int	check_overflow(int sign)
 		return (-1);
 	else
 		return (0);
-}
-
-static int	ft_skip_spaces(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	if (str[i] != '\0')
-		return (-1);
-	return (0);
 }
 
 int	ft_atoi(char *str)
@@ -56,7 +44,7 @@ int	ft_atoi(char *str)
 		total = total * 10 + str[i] - '0';
 		i++;
 	}
-	if (ft_skip_spaces(&str[i]) != 0)
+	if (ft_all_spaces(&str[i]) == 0)
 		return (-1);
 	return ((int)(signe * total));
 }

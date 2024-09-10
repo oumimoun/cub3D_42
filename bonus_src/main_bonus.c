@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:01:09 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/09/10 15:58:20 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/09/08 12:00:39 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init_player(t_data *data)
 {
 	data->player.x = (data->map->player_x * TILE_SIZE) + (TILE_SIZE / 2);
 	data->player.y = (data->map->player_y * TILE_SIZE) + (TILE_SIZE / 2);
-	data->player.turn_direction = 1;
+	data->player.turn_direction = 0;
 	data->player.walk_direction = 0;
 	data->player.side_walk = 0;
 	data->mouse_x = -1;
@@ -68,6 +68,7 @@ int	init_mlx(t_data *data)
 		return (ft_putstr_fd("Error\n Img Initialization Failed\n", 2), ERROR);
 	if (mlx_image_to_window(data->mlx, data->minimap.minimap_img, 0, 0) == -1)
 		return (ft_putstr_fd("Error\n Img to Window Failed\n", 2), ERROR);
+	update_player(data);
 	mlx_cursor_hook(data->mlx, &ft_mouse, data);
 	if (!mlx_loop_hook(data->mlx, &key_event_handler, data))
 		return (ft_putstr_fd("Error\n MLX Hooks\n", 2), ERROR);
