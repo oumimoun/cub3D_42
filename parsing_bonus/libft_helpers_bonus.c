@@ -6,7 +6,7 @@
 /*   By: oumimoun <oumimoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:01:28 by oumimoun          #+#    #+#             */
-/*   Updated: 2024/09/07 10:53:19 by oumimoun         ###   ########.fr       */
+/*   Updated: 2024/09/11 10:33:34 by oumimoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_atoi(char *str)
 		total = total * 10 + str[i] - '0';
 		i++;
 	}
+	if (ft_all_spaces(&str[i]) == 0)
+		return (-1);
 	return ((int)(signe * total));
 }
 

@@ -2,7 +2,7 @@ NAME = cub3D
 NAME_BONUS = cub3D_bonus
 HEADERS = cub3d.h
 HEADERS_BONUS = bonus_src/cub3d_bonus.h
-CC = cc 
+CC = cc
 FLAGS = -Wall -Werror -Wextra -Ofast
 MLX = MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib"
 BUILD = MLX42/build
@@ -32,7 +32,6 @@ SRC = main.c\
 		parsing/libft_utils.c\
 		parsing/libft_helpers.c\
 		parsing/libft_suite.c\
-	
 
 SRC_BONUS = bonus_src/main_bonus.c\
 		bonus_src/address_collector_bonus.c\
